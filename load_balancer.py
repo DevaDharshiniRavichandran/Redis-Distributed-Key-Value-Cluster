@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 # Partition configuration
 partitions = {
-    1: ["http://127.0.0.1:5001", "http://127.0.0.1:5002"],  # Partition 1 replicas
-    2: ["http://127.0.0.1:5003", "http://127.0.0.1:5004"],  # Partition 2 replicas
+    1: ["http://0.0.0.0:5001", "http://0.0.0.0:5002"],  # Partition 1 replicas
+    2: ["http://0.0.0.0:5003", "http://0.0.0.0:5004"],  # Partition 2 replicas
 }
 
 # Utility function to contact a replica
@@ -64,6 +64,7 @@ def set_value():
         _, error = contact_replica(f"{replica}/set", "POST", {"key": key, "value": value})
         if error:
             errors.append(error)
+        break
 
     if not errors:
         return jsonify({'message': f'Key "{key}" set successfully in partition {partition_id}'}), 200
