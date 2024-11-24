@@ -71,4 +71,4 @@ def set_value():
         return jsonify({'error': f'Failed to set key in partition {partition_id}', 'details': errors}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)

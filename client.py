@@ -2,7 +2,7 @@ import threading
 import time
 import requests
 
-SERVER_URL = "http://127.0.0.1:5000"
+SERVER_URL = "http://127.0.0.1:8000"
 
 def set_key(key, value):
     start_time = time.time()
