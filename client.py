@@ -51,3 +51,7 @@ if __name__ == "__main__":
     print(f"Avg. latency for SET request: {sum(set_key_stats)/len(set_key_stats)}")
     print(f"Avg. latency for GET request: {sum(get_key_stats)/len(get_key_stats)}")
     print("------------------------------------------------")
+
+    response_stats = requests.get(f"{SERVER_URL}/stats")
+    print("------------------------------------------------")
+    print("Stats from the Load Balancer: ", response_stats.content)

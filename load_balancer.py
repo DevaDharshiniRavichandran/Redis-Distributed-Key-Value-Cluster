@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import threading
 import requests
+import time
 
 app = Flask(__name__)
 
@@ -9,6 +10,9 @@ partitions = {
     1: ["http://0.0.0.0:5001", "http://0.0.0.0:5002"],  # Partition 1 replicas
     2: ["http://0.0.0.0:5003", "http://0.0.0.0:5004"],  # Partition 2 replicas
 }
+# Track query execution times and key counts
+query_times = {'get': [], 'set': []}
+key_counts = {1: 0, 2: 0}
 
 # Utility function to contact a replica
 def contact_replica(url, method, data=None):
@@ -29,6 +33,7 @@ def get_value():
     key = request.args.get('key')
     partition_id = hash(key) % len(partitions) + 1
     replicas = partitions[partition_id]
+    start_time = time.time()
 
     # Fetch from all replicas for consistency
     responses = []
@@ -39,6 +44,9 @@ def get_value():
             errors.append(error)
         else:
             responses.append(response)
+
+    elapsed_time = time.time() - start_time
+    query_times['get'].append(elapsed_time)
 
     if responses:
         # Return the first response assuming all replicas are consistent
@@ -57,6 +65,7 @@ def set_value():
 
     partition_id = hash(key) % len(partitions) + 1
     replicas = partitions[partition_id]
+    start_time = time.time()
 
     # Write to all replicas for consistency
     errors = []
@@ -67,9 +76,41 @@ def set_value():
         break
 
     if not errors:
+        key_counts[partition_id] += 1
+        elapsed_time = time.time() - start_time
+        query_times['set'].append(elapsed_time)
         return jsonify({'message': f'Key "{key}" set successfully in partition {partition_id}'}), 200
     else:
         return jsonify({'error': f'Failed to set key in partition {partition_id}', 'details': errors}), 500
+
+# Helper function to calculate the data spread ratio
+def calculate_data_spread_ratio():
+    total_keys = sum(key_counts.values())
+    if total_keys == 0:
+        return {partition_id: 0 for partition_id in key_counts}  # Avoid division by zero
+
+    spread_ratio = {}
+    for partition_id, count in key_counts.items():
+        spread_ratio[partition_id] = count / total_keys
+
+    return spread_ratio
+
+@app.route('/stats', methods=['GET'])
+def get_stats():
+    # Calculate the data spread ratio
+    spread_ratio = calculate_data_spread_ratio()
+
+    # Calculate average query execution times for set and get operations
+    avg_set_time = sum(query_times['set']) / len(query_times['set']) if query_times['set'] else 0
+    avg_get_time = sum(query_times['get']) / len(query_times['get']) if query_times['get'] else 0
+
+    # Return stats
+    return jsonify({
+        'data_spread_ratio': spread_ratio,
+        'avg_set_query_time': avg_set_time,
+        'avg_get_query_time': avg_get_time
+    }), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
