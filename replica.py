@@ -3,7 +3,7 @@
 from flask import Flask, request, jsonify
 from collections import defaultdict
 import threading, sys, copy, time
-
+import requests
 SLAVE_REPLICA_CMD_ARG = "slave"
 
 # In-memory thread-safe key-value store
@@ -32,41 +32,47 @@ dataStore = DataStore()
 
 app = Flask(__name__)
     
+
 @app.route('/get', methods=['GET'])
 def get_value():
-    # TODO - Use DataStore
-    return jsonify({'message': "Route incomplete"}), 500
-
-    # key = request.args.get('key')
-    # if key in store:
-    #     return jsonify({'key': key, 'value': store[key]}), 200
-    # else:
-    #     return jsonify({'error': f'Key "{key}" not found'}), 404
+    key = request.args.get('key')
+    value = dataStore.get(key)
+    if value is not None:
+        return jsonify({'key': key, 'value': value}), 200
+    else:
+        return jsonify({'error': f'Key "{key}" not found'}), 404
 
 @app.route('/set', methods=['POST'])
 def set_value():
-    # TODO - Use DataStore
-    return jsonify({'message': "Route incomplete"}), 500
+    data = request.json
+    if not data or 'key' not in data or 'value' not in data:
+        return jsonify({'error': 'Invalid payload, "key" and "value" are required'}), 400
+    
+    dataStore.set(data['key'], data['value'])
+    return jsonify({'message': f'Key "{data["key"]}" set successfully'}), 200
 
-    # data = request.json
-    # if not data or 'key' not in data or 'value' not in data:
-    #     return jsonify({'error': 'Invalid payload, "key" and "value" are required'}), 400
-    # store[data['key']] = data['value']
-    # return jsonify({'message': f'Key "{data["key"]}" set successfully'}), 200
 
 @app.route('/getFullStore', methods=['GET'])
 def get_full_store():
-    # TODO - Implement logic to leverage DataStore.getFullStore()
-    return jsonify({'message': "Route incomplete"}), 500
+    return jsonify(dataStore.getFullStore()), 200
 
 def set_up_sync_thread(masterReplicaPort):
     def syncTask():
         print("\nSync thread on slave port " + sys.argv[1] + " polling master port " + masterReplicaPort + "\n")
-        while(True):
+        master_url = f"http://127.0.0.1:{masterReplicaPort}/getFullStore"
+        while True:
             # TODO - If this is a slave replica, update your store with parent every 5sec leveraging DataStore.setFullStore()
+            try:
+                response = requests.get(master_url)
+                if response.status_code == 200:
+                    updated_store = response.json()
+                    dataStore.setFullStore(updated_store)
+            except Exception as e:
+                print(f"Error during sync: {e}")
             time.sleep(5)
     syncThread = threading.Thread(target=syncTask, daemon=True)
     syncThread.start()
+
 
 if __name__ == '__main__':
     if(sys.argv[2] == SLAVE_REPLICA_CMD_ARG):
