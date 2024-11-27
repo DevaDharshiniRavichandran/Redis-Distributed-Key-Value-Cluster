@@ -3,7 +3,7 @@
 from flask import Flask, request, jsonify
 from collections import defaultdict
 import threading, sys, copy, time
-
+import requests
 SLAVE_REPLICA_CMD_ARG = "slave"
 
 # In-memory thread-safe key-value store
