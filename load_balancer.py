@@ -10,6 +10,10 @@ partitions = {
     1: ["http://0.0.0.0:5001", "http://0.0.0.0:5002"],  # Partition 1 replicas
     2: ["http://0.0.0.0:5003", "http://0.0.0.0:5004"],  # Partition 2 replicas
 }
+
+# Health status for replicas (default: all healthy)
+replica_health = {replica: True for partition in partitions.values() for replica in partition}
+
 # Track query execution times and key counts
 query_times = {'get': [], 'set': []}
 key_counts = {1: 0, 2: 0}
@@ -18,14 +22,25 @@ key_counts = {1: 0, 2: 0}
 def contact_replica(url, method, data=None):
     try:
         if method == "GET":
-            response = requests.get(url, params=data)
+            response = requests.get(url, params=data, timeout=2)
         elif method == "POST":
-            response = requests.post(url, json=data)
+            response = requests.post(url, json=data, timeout=2)
         else:
             return None, "Invalid method"
         return response.json(), None
     except Exception as e:
         return None, str(e)
+
+# Periodic health check for replicas
+def health_check():
+    while True:
+        for replica in replica_health.keys():
+            try:
+                response = requests.get(f"{replica}/getFullStore", timeout=2)
+                replica_health[replica] = response.status_code == 200
+            except Exception:
+                replica_health[replica] = False
+        time.sleep(5)  # Check every 5 seconds
 
 # Forward client requests to appropriate partition
 @app.route('/get', methods=['GET'])
@@ -35,21 +50,22 @@ def get_value():
     replicas = partitions[partition_id]
     start_time = time.time()
 
-    # Fetch from all replicas for consistency
+    # Fetch from the first available replica
     responses = []
     errors = []
     for replica in replicas:
-        response, error = contact_replica(f"{replica}/get", "GET", {"key": key})
-        if error:
-            errors.append(error)
-        else:
+        if replica_health[replica]:
+            response, error = contact_replica(f"{replica}/get", "GET", {"key": key})
+            if error:
+                errors.append(error)
+                continue
             responses.append(response)
+            break  # Stop after the first successful response
 
     elapsed_time = time.time() - start_time
     query_times['get'].append(elapsed_time)
 
     if responses:
-        # Return the first response assuming all replicas are consistent
         return jsonify({'partition': partition_id, 'data': responses[0]}), 200
     else:
         return jsonify({'error': f"Failed to fetch key from partition {partition_id}", 'details': errors}), 500
@@ -67,15 +83,15 @@ def set_value():
     replicas = partitions[partition_id]
     start_time = time.time()
 
-    # Write to all replicas for consistency
+    # Write to all healthy replicas
     errors = []
     for replica in replicas:
-        _, error = contact_replica(f"{replica}/set", "POST", {"key": key, "value": value})
-        if error:
-            errors.append(error)
-        break
+        if replica_health[replica]:
+            _, error = contact_replica(f"{replica}/set", "POST", {"key": key, "value": value})
+            if error:
+                errors.append(error)
 
-    if not errors:
+    if len(errors) < len(replicas):  # At least one replica succeeded
         key_counts[partition_id] += 1
         elapsed_time = time.time() - start_time
         query_times['set'].append(elapsed_time)
@@ -111,6 +127,9 @@ def get_stats():
         'avg_get_query_time': avg_get_time
     }), 200
 
-
 if __name__ == '__main__':
+    # Start health check thread
+    health_thread = threading.Thread(target=health_check, daemon=True)
+    health_thread.start()
+
     app.run(host='0.0.0.0', port=8000)
