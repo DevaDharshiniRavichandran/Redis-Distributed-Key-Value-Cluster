@@ -2,8 +2,8 @@
 
 from flask import Flask, request, jsonify
 from collections import defaultdict
-import threading, sys, copy, time
-import requests
+import threading, sys, copy, time, requests
+
 SLAVE_REPLICA_CMD_ARG = "slave"
 
 # In-memory thread-safe key-value store
@@ -14,19 +14,22 @@ class DataStore:
     
     def set(self, key, value):
         with self._lock:
-            self._dict[key] = value
+            self._store[key] = value
         
     def get(self, key):
         with self._lock:
-            return self._dict.get(key)
+            return self._store.get(key)
     
     def getFullStore(self):
         with self._lock:
             return copy.deepcopy(self._store)
     
     def setFullStore(self, updatedStore):
-        with self._lock:
+        with self._lock, open('sync' + sys.argv[1] + ".txt", 'w') as syncFile:
+            syncFile.write(str(self._store))
+            syncFile.write("\n\n\n")
             self._store = updatedStore
+            syncFile.write(str(self._store))
         
 dataStore = DataStore()
 
@@ -56,12 +59,12 @@ def set_value():
 def get_full_store():
     return jsonify(dataStore.getFullStore()), 200
 
-def set_up_sync_thread(masterReplicaPort):
+def set_up_sync_thread():
+    masterReplicaPort = sys.argv[3]
     def syncTask():
         print("\nSync thread on slave port " + sys.argv[1] + " polling master port " + masterReplicaPort + "\n")
         master_url = f"http://127.0.0.1:{masterReplicaPort}/getFullStore"
         while True:
-            # TODO - If this is a slave replica, update your store with parent every 5sec leveraging DataStore.setFullStore()
             try:
                 response = requests.get(master_url)
                 if response.status_code == 200:
@@ -76,6 +79,6 @@ def set_up_sync_thread(masterReplicaPort):
 
 if __name__ == '__main__':
     if(sys.argv[2] == SLAVE_REPLICA_CMD_ARG):
-        set_up_sync_thread(sys.argv[3])        
+        set_up_sync_thread()        
     
     app.run(host='0.0.0.0', port=sys.argv[1], threaded=True)
