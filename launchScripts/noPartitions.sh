@@ -1,9 +1,9 @@
 #!/bin/bash
 
 pushd '../'
-export case='case1'
-gunicorn -w 4 -b 0.0.0.0:8000 load_balancer:app &
-#python load_balancer.py &
+export case='case2'
+#gunicorn -w 4 -b 0.0.0.0:8000 load_balancer:app &
+python load_balancer.py &
 
 python replica.py 5001 master 0 &
 
