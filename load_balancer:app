@@ -1,0 +1,290 @@
+[2024-11-30 16:10:32 -0700] [99617] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:10:32 -0700] [99617] [INFO] Listening at: http://0.0.0.0:8000 (99617)
+[2024-11-30 16:10:32 -0700] [99617] [INFO] Using worker: sync
+[2024-11-30 16:10:32 -0700] [99621] [INFO] Booting worker with pid: 99621
+[2024-11-30 16:10:32 -0700] [99621] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:10:32 -0700] [99621] [INFO] Worker exiting (pid: 99621)
+[2024-11-30 16:10:32 -0700] [99617] [ERROR] Worker (pid:99621) exited with code 3
+[2024-11-30 16:10:32 -0700] [99617] [ERROR] Shutting down: Master
+[2024-11-30 16:10:32 -0700] [99617] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:11:01 -0700] [99641] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:11:01 -0700] [99641] [INFO] Listening at: http://0.0.0.0:8000 (99641)
+[2024-11-30 16:11:01 -0700] [99641] [INFO] Using worker: sync
+[2024-11-30 16:11:01 -0700] [99645] [INFO] Booting worker with pid: 99645
+[2024-11-30 16:11:01 -0700] [99645] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:11:01 -0700] [99645] [INFO] Worker exiting (pid: 99645)
+[2024-11-30 16:11:01 -0700] [99646] [INFO] Booting worker with pid: 99646
+[2024-11-30 16:11:01 -0700] [99646] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:11:01 -0700] [99646] [INFO] Worker exiting (pid: 99646)
+[2024-11-30 16:11:01 -0700] [99641] [ERROR] Worker (pid:99645) exited with code 3
+[2024-11-30 16:11:01 -0700] [99641] [ERROR] Worker (pid:99646) was sent SIGTERM!
+[2024-11-30 16:11:01 -0700] [99641] [ERROR] Shutting down: Master
+[2024-11-30 16:11:01 -0700] [99641] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:11:08 -0700] [99662] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:11:08 -0700] [99662] [INFO] Listening at: http://0.0.0.0:8000 (99662)
+[2024-11-30 16:11:08 -0700] [99662] [INFO] Using worker: sync
+[2024-11-30 16:11:08 -0700] [99667] [INFO] Booting worker with pid: 99667
+[2024-11-30 16:11:08 -0700] [99667] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:11:08 -0700] [99667] [INFO] Worker exiting (pid: 99667)
+[2024-11-30 16:11:08 -0700] [99662] [ERROR] Worker (pid:99667) exited with code 3
+[2024-11-30 16:11:08 -0700] [99662] [ERROR] Shutting down: Master
+[2024-11-30 16:11:08 -0700] [99662] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:11:17 -0700] [99681] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:11:17 -0700] [99681] [INFO] Listening at: http://0.0.0.0:8000 (99681)
+[2024-11-30 16:11:17 -0700] [99681] [INFO] Using worker: sync
+[2024-11-30 16:11:17 -0700] [99686] [INFO] Booting worker with pid: 99686
+[2024-11-30 16:11:17 -0700] [99686] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:11:17 -0700] [99686] [INFO] Worker exiting (pid: 99686)
+[2024-11-30 16:11:17 -0700] [99681] [ERROR] Worker (pid:99686) exited with code 3
+[2024-11-30 16:11:17 -0700] [99681] [ERROR] Shutting down: Master
+[2024-11-30 16:11:17 -0700] [99681] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:11:28 -0700] [99702] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:11:28 -0700] [99702] [INFO] Listening at: http://0.0.0.0:8000 (99702)
+[2024-11-30 16:11:28 -0700] [99702] [INFO] Using worker: sync
+[2024-11-30 16:11:28 -0700] [99707] [INFO] Booting worker with pid: 99707
+[2024-11-30 16:11:28 -0700] [99707] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:11:28 -0700] [99707] [INFO] Worker exiting (pid: 99707)
+[2024-11-30 16:11:28 -0700] [99702] [ERROR] Worker (pid:99707) exited with code 3
+[2024-11-30 16:11:28 -0700] [99702] [ERROR] Shutting down: Master
+[2024-11-30 16:11:28 -0700] [99702] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:12:39 -0700] [99742] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:12:39 -0700] [99742] [INFO] Listening at: http://0.0.0.0:8000 (99742)
+[2024-11-30 16:12:39 -0700] [99742] [INFO] Using worker: sync
+[2024-11-30 16:12:39 -0700] [99747] [INFO] Booting worker with pid: 99747
+[2024-11-30 16:12:39 -0700] [99748] [INFO] Booting worker with pid: 99748
+[2024-11-30 16:12:39 -0700] [99747] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:12:39 -0700] [99747] [INFO] Worker exiting (pid: 99747)
+[2024-11-30 16:12:39 -0700] [99748] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:12:39 -0700] [99748] [INFO] Worker exiting (pid: 99748)
+[2024-11-30 16:12:39 -0700] [99742] [ERROR] Worker (pid:99747) exited with code 3
+[2024-11-30 16:12:39 -0700] [99742] [ERROR] Worker (pid:99748) was sent SIGTERM!
+[2024-11-30 16:12:39 -0700] [99742] [ERROR] Shutting down: Master
+[2024-11-30 16:12:39 -0700] [99742] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:12:49 -0700] [99764] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:12:49 -0700] [99764] [INFO] Listening at: http://0.0.0.0:8000 (99764)
+[2024-11-30 16:12:49 -0700] [99764] [INFO] Using worker: sync
+[2024-11-30 16:12:49 -0700] [99768] [INFO] Booting worker with pid: 99768
+[2024-11-30 16:12:49 -0700] [99768] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:12:49 -0700] [99768] [INFO] Worker exiting (pid: 99768)
+[2024-11-30 16:12:49 -0700] [99764] [ERROR] Worker (pid:99768) exited with code 3
+[2024-11-30 16:12:49 -0700] [99764] [ERROR] Shutting down: Master
+[2024-11-30 16:12:49 -0700] [99764] [ERROR] Reason: Worker failed to boot.
+[2024-11-30 16:12:54 -0700] [99796] [INFO] Starting gunicorn 23.0.0
+[2024-11-30 16:12:54 -0700] [99796] [INFO] Listening at: http://0.0.0.0:8000 (99796)
+[2024-11-30 16:12:54 -0700] [99796] [INFO] Using worker: sync
+[2024-11-30 16:12:54 -0700] [99800] [INFO] Booting worker with pid: 99800
+[2024-11-30 16:12:54 -0700] [99800] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/opt/homebrew/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.15/Frameworks/Python.framework/Versions/3.10/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1004, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'access-logfile'
+[2024-11-30 16:12:54 -0700] [99800] [INFO] Worker exiting (pid: 99800)
+[2024-11-30 16:12:54 -0700] [99796] [ERROR] Worker (pid:99800) exited with code 3
+[2024-11-30 16:12:54 -0700] [99796] [ERROR] Shutting down: Master
+[2024-11-30 16:12:54 -0700] [99796] [ERROR] Reason: Worker failed to boot.

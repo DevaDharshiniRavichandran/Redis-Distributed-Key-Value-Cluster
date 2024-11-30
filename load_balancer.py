@@ -2,18 +2,30 @@ from flask import Flask, request, jsonify
 import threading
 import requests
 import time
+import os
 
 app = Flask(__name__)
 
 # Partition configuration
-partitions = {
-    1: ["http://0.0.0.0:5001", "http://0.0.0.0:5002"],  # Partition 1 replicas
-    2: ["http://0.0.0.0:5003", "http://0.0.0.0:5004"],  # Partition 2 replicas
+partitions_cases = {
+    'case3': {
+        1: ["http://0.0.0.0:5001", "http://0.0.0.0:5002", "http://0.0.0.0:5003"],  # Partition 1 replicas
+        2: ["http://0.0.0.0:5004", "http://0.0.0.0:5005", "http://0.0.0.0:5006"],  # Partition 2 replicas
+        3: ["http://0.0.0.0:5007", "http://0.0.0.0:5008", "http://0.0.0.0:5009"]
+    },
+    'case2': {
+        1: ["http://0.0.0.0:5001"]
+    },
+    'case1': {
+        1: ["http://0.0.0.0:5001"],
+        2: ["http://0.0.0.0:5002"],
+        3: ["http://0.0.0.0:5003"]
+    }
 }
 
 # Health status for replicas (default: all healthy)
-replica_health = {replica: True for partition in partitions.values() for replica in partition}
-
+replica_health = None
+partitions = None
 # Track query execution times and key counts
 query_times = {'get': [], 'set': []}
 key_counts = {1: 0, 2: 0}
@@ -128,6 +140,10 @@ def get_stats():
     }), 200
 
 if __name__ == '__main__':
+    partitions = partitions_cases[os.environ.get('case')]
+    print("Choosing case: ", partitions)
+    replica_health = {replica: True for partition in partitions.values() for replica in partition}
+
     # Start health check thread
     health_thread = threading.Thread(target=health_check, daemon=True)
     health_thread.start()

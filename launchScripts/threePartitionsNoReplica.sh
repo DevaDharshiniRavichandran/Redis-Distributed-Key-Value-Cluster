@@ -1,11 +1,12 @@
 #!/bin/bash
 
-gunicorn -w 4 -b 0.0.0.0:8000 load_balancer:app &
-python ../load_balancer.py &
+pushd '../'
+export case='case1'
+gunicorn -w 4 -b 0.0.0.0:8000 access-logfile - --error-logfile  load_balancer:app &
 
-python ../replica.py 5001 master 0 &
-python ../replica.py 5002 master 0 &
-python ../replica.py 5003 master 0 &
+python3.10 replica.py 5001 master 0 &
+python3.10 replica.py 5002 master 0 &
+python3.10 replica.py 5003 master 0 &
 
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
