@@ -87,17 +87,11 @@ def run_concurrent_threads(num_threads, total_requests):
     print("All threads completed.")
 
 if __name__ == "__main__":
-    total_requests = 100_000  # Total number of requests to send
-    num_threads = 10  # Number of concurrent threads
+    total_requests = 10_000 # Total number of requests to send
+    num_threads = 100  # Number of concurrent threads
 
     # Run concurrent threads
     run_concurrent_threads(num_threads, total_requests)
-
-    # Display average latencies
-    print("------------------------------------------------")
-    print(f"Avg. latency for SET requests: {sum(set_key_stats)/len(set_key_stats):.4f}s")
-    print(f"Avg. latency for GET requests: {sum(get_key_stats)/len(get_key_stats):.4f}s")
-    print("------------------------------------------------")
 
     # Fetch stats from the load balancer
     try:

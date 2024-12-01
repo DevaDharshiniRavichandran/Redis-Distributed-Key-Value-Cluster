@@ -26,10 +26,13 @@ class DataStore:
     
     def setFullStore(self, updatedStore):
         with self._lock, open('sync' + sys.argv[1] + ".txt", 'w') as syncFile:
+            if(str(self._store) == str(updatedStore)):
+                return
             syncFile.write(str(self._store))
             syncFile.write("\n\n\n")
-            self._store = updatedStore
-            syncFile.write(str(self._store))
+            self._store = dict(updatedStore)
+            syncFile.write(str(updatedStore))
+            syncFile.flush()
         
 dataStore = DataStore()
 
@@ -43,7 +46,7 @@ def get_value():
     if value is not None:
         return jsonify({'key': key, 'value': value}), 200
     else:
-        return jsonify({'error': f'Key "{key}" not found'}), 404
+        return jsonify({'error': f'Key "{key}" not found'}), 200
 
 @app.route('/set', methods=['POST'])
 def set_value():
@@ -72,7 +75,7 @@ def set_up_sync_thread():
                     dataStore.setFullStore(updated_store)
             except Exception as e:
                 print(f"Error during sync: {e}")
-            time.sleep(5)
+            time.sleep(10)
     syncThread = threading.Thread(target=syncTask, daemon=True)
     syncThread.start()
 

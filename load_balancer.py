@@ -3,6 +3,7 @@ import threading
 import requests
 import time
 import os
+import random
 
 app = Flask(__name__)
 
@@ -24,11 +25,17 @@ partitions_cases = {
 }
 
 # Health status for replicas (default: all healthy)
-replica_health = None
-partitions = None
+partitions = partitions_cases[os.environ.get('case')]
+case = os.environ.get('case')
+eventual = 1
+if os.environ.get('eventual'):
+    eventual = os.environ.get('eventual')
+print("Choosing case: ", partitions)
+replica_health = {replica: True for partition in partitions.values() for replica in partition}
+
 # Track query execution times and key counts
 query_times = {'get': [], 'set': []}
-key_counts = {1: 0, 2: 0}
+key_counts = {1: 0, 2: 0, 3: 0}
 
 # Utility function to contact a replica
 def contact_replica(url, method, data=None):
@@ -61,18 +68,15 @@ def get_value():
     partition_id = hash(key) % len(partitions) + 1
     replicas = partitions[partition_id]
     start_time = time.time()
-
-    # Fetch from the first available replica
+    what_replica = 0 if case in ['case2', 'case1'] else random.randint(0, len(replicas)-1)
     responses = []
     errors = []
-    for replica in replicas:
-        if replica_health[replica]:
-            response, error = contact_replica(f"{replica}/get", "GET", {"key": key})
-            if error:
-                errors.append(error)
-                continue
-            responses.append(response)
-            break  # Stop after the first successful response
+    # Fetch from the first available replica
+    replica = replicas[what_replica]
+    response, error = contact_replica(f"{replica}/get", "GET", {"key": key})
+    if error:
+        errors.append(error)
+    responses.append(response)
 
     elapsed_time = time.time() - start_time
     query_times['get'].append(elapsed_time)
@@ -102,6 +106,10 @@ def set_value():
             _, error = contact_replica(f"{replica}/set", "POST", {"key": key, "value": value})
             if error:
                 errors.append(error)
+        if eventual:
+            break
+        else:
+            pass
 
     if len(errors) < len(replicas):  # At least one replica succeeded
         key_counts[partition_id] += 1
@@ -140,9 +148,6 @@ def get_stats():
     }), 200
 
 if __name__ == '__main__':
-    partitions = partitions_cases[os.environ.get('case')]
-    print("Choosing case: ", partitions)
-    replica_health = {replica: True for partition in partitions.values() for replica in partition}
 
     # Start health check thread
     health_thread = threading.Thread(target=health_check, daemon=True)
