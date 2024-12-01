@@ -10,3 +10,8 @@
 
 ## Runnning the Client
 - `python3.10 client.py`
+
+## Putting it all together
+- Run the load-balancer scripts on one terminal
+- Run the client on another terminal
+- Analyse the results printed to the client terminal console
