@@ -1,4 +1,7 @@
 ## Pre-requisites
+<p align="center">
+  <img src="redis.png" alt="redis" width="600"/>
+</p>
 - python version: 3.10
 - `pip install -r requirements.txt`
 ## Running the load-balancer
